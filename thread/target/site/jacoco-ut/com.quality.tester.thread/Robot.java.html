@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Robot.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">quality-testing-example</a> &gt; <a href="index.source.html" class="el_package">com.quality.tester.thread</a> &gt; <span class="el_source">Robot.java</span></div><h1>Robot.java</h1><pre class="source lang-java linenums">package com.quality.tester.thread;
+
+import java.util.Scanner;
+
+<span class="nc" id="L5">public class Robot {</span>
+    static String[][] robotMap;
+<span class="fc" id="L7">    static String penDirection = null, robotFace = null;</span>
+    private static Scanner sc;
+<span class="fc" id="L9">    static int nMatrix = 0;</span>
+    static int mark1;
+	static int mark2;
+	static int mark3;
+	static int mark4;
+<span class="fc" id="L14">    static int[] robotPosition = new int[2];</span>
+    
+
+    public static String changeRobotFaceLeft(String robotFace) {
+<span class="fc bfc" id="L18" title="All 2 branches covered.">        if (robotFace.equals(&quot;north&quot;))</span>
+<span class="fc" id="L19">            robotFace = &quot;west&quot;;</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">        else if (robotFace.equals(&quot;west&quot;))</span>
+<span class="fc" id="L21">            robotFace = &quot;south&quot;;</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        else if (robotFace.equals(&quot;south&quot;))</span>
+<span class="fc" id="L23">            robotFace = &quot;east&quot;;</span>
+        else
+<span class="fc" id="L25">            robotFace = &quot;north&quot;;</span>
+<span class="fc" id="L26">        return robotFace;</span>
+    }
+
+    public static String changeRobotFaceRight(String robotFace) {
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (robotFace.equals(&quot;north&quot;))</span>
+<span class="fc" id="L31">            robotFace = &quot;east&quot;;</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        else if (robotFace.equals(&quot;south&quot;))</span>
+<span class="fc" id="L33">            robotFace = &quot;west&quot;;</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        else if (robotFace.equals(&quot;west&quot;))</span>
+<span class="fc" id="L35">            robotFace = &quot;north&quot;;</span>
+        else
+<span class="fc" id="L37">            robotFace = &quot;south&quot;;</span>
+<span class="fc" id="L38">        return robotFace;</span>
+    }
+
+    public static String[][] trackRobot(int oldX, int oldY, int newX, int newY, String penDirection, String[][] robotMap) {
+        int i, j;
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (penDirection.equals(&quot;down&quot;)) {</span>
+            // For negative turns
+<span class="pc bpc" id="L45" title="2 of 4 branches missed.">            if (oldX &gt; newX || oldY &gt; newY) {</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">                for (i = newX; i &lt;= oldX; i++) {</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">                    for (j = newY; j &lt;= oldY; j++) {</span>
+<span class="nc bnc" id="L48" title="All 8 branches missed.">                        if (i &gt;= 0 &amp;&amp; i &lt; robotMap.length &amp;&amp; j &gt;= 0 &amp;&amp; j &lt; robotMap[0].length) {</span>
+<span class="nc" id="L49">                            robotMap[i][j] = &quot;*&quot;;</span>
+                        }
+                    }
+                }
+            }
+
+<span class="fc bfc" id="L55" title="All 2 branches covered.">            for (i = Math.max(0, oldX); i &lt;= Math.min(newX, robotMap.length - 1); i++) {</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">                for (j = Math.max(0, oldY); j &lt;= Math.min(newY, robotMap[0].length - 1); j++) {</span>
+<span class="fc" id="L57">                    robotMap[i][j] = &quot;*&quot;;</span>
+                }
+            }
+
+        }
+<span class="fc" id="L62">        return robotMap;</span>
+    }
+
+    public static void initialiseArray(int nMatrix) {
+<span class="fc" id="L66">        penDirection = &quot;up&quot;;</span>
+<span class="fc" id="L67">        robotFace = &quot;north&quot;;</span>
+<span class="fc" id="L68">        robotMap = new String[nMatrix][nMatrix];</span>
+<span class="fc" id="L69">    }</span>
+    
+    public static int[] move(int[] robotPosition, String []commandArray, int nMatrix, String robotFace, String penDirection, String[][] robotMap) {
+<span class="fc" id="L72">        int mark1 = robotPosition[1];</span>
+<span class="fc" id="L73">        int mark2 = robotPosition[0];</span>
+<span class="fc" id="L74">        int walk = Integer.parseInt(commandArray[1]);</span>
+        
+        
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (robotFace.equals(&quot;north&quot;)) {</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">            if (robotPosition[0] + walk &lt;= nMatrix) {</span>
+<span class="fc" id="L79">                robotPosition[0] = robotPosition[0] + walk;</span>
+            } else {
+<span class="fc" id="L81">                System.out.println(&quot;Space not available for robot to move upwards&quot;);</span>
+            }
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        } else if (robotFace.equals(&quot;south&quot;)) {</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">            if (robotPosition[0] - walk &gt;= 0) {</span>
+<span class="fc" id="L85">                robotPosition[0] = robotPosition[0] - walk;</span>
+            } else {
+<span class="fc" id="L87">                System.out.println(&quot;Space not available for robot to move downwards&quot;);</span>
+            }
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        } else if (robotFace.equals(&quot;east&quot;)) {</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">            if (robotPosition[1] + walk &lt;= nMatrix) {</span>
+<span class="fc" id="L91">                robotPosition[1] = robotPosition[1] + walk;</span>
+            } else {
+<span class="nc" id="L93">                System.out.println(&quot;Space not available for robot to move sidewards&quot;);</span>
+            }
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        } else if (robotFace.equals(&quot;west&quot;)) {</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">            if (robotPosition[1] - walk &gt;= 0) {</span>
+<span class="fc" id="L97">                robotPosition[1] = robotPosition[1] - walk;</span>
+            } else {
+<span class="fc" id="L99">                System.out.println(&quot;Space not available for robot to move sidewards&quot;);</span>
+            }
+        }
+
+<span class="fc" id="L103">        int mark3 = robotPosition[1];</span>
+<span class="fc" id="L104">        int mark4 = robotPosition[0];</span>
+
+        // Assuming trackRobot method modifies robotMap based on the robot's movement
+<span class="fc" id="L107">        robotMap = trackRobot(mark1, mark2, mark3, mark4, penDirection, robotMap);</span>
+
+<span class="fc" id="L109">        return robotPosition;</span>
+    }
+
+    
+    public static void printArray(int nMatrix) {
+<span class="fc bfc" id="L114" title="All 2 branches covered.">    	for (int i = robotMap.length - 1; i &gt;= 0; i--) {</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">            for (int j = 0; j &lt; robotMap[i].length; j++) {</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">                if (robotMap[j][i] == null) {</span>
+<span class="fc" id="L117">                    System.out.print(&quot;  &quot;);</span>
+                } else {
+<span class="fc" id="L119">                    System.out.print(robotMap[j][i] + &quot; &quot;);</span>
+                }
+            }
+<span class="fc" id="L122">            System.out.println(&quot;\n&quot;);</span>
+    	}
+<span class="fc" id="L124">    }</span>
+    
+    public static void inputCommand(){
+<span class="fc" id="L127">    	int[] robotPosition = new int[2];</span>
+<span class="fc" id="L128">        sc = new Scanner(System.in);</span>
+<span class="fc" id="L129">        System.out.print(&quot;Welcome to RoboticPen!!!\n&quot;</span>
+                + &quot;Use below commands!!!\n&quot;
+                + &quot;[U|u] Pen up \n&quot;
+                + &quot;[D|d] Pen down \n&quot;
+                + &quot;[R|r] Turn right \n&quot;
+                + &quot;[L|l] Turn left \n&quot;
+                + &quot;[M s|m s] Move forward s spaces (s is a non-negative integer)\n&quot;
+                + &quot;[P|p] Print the floor mapped \n&quot;
+                + &quot;[C|c] Print current position of the pen and whether it is up or down and its \n&quot;
+                + &quot;facing direction \n&quot;
+                + &quot;[Q|q] Stop the program \n&quot;
+                + &quot;[I n|i n] Initialize the system: The values of the array floor are zeros and the robot \n&quot;
+                + &quot;is back to [0, 0], pen up and facing north. n size of the array, an integer \n&quot;
+                + &quot;greater than zero \n&quot;
+                + &quot;[H|h] Replay all the commands entered by the user as a history \n&quot;);
+        String[] commandArray;
+        //int walk;
+<span class="fc" id="L146">        boolean flag = true;</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        while (flag) {</span>
+<span class="fc" id="L148">        	System.out.print(&quot;Enter command: &quot;);</span>
+<span class="fc" id="L149">            String command = sc.nextLine();</span>
+<span class="fc" id="L150">            commandArray = command.split(&quot;\\s&quot;);</span>
+            try {
+<span class="pc bpc" id="L152" title="5 of 10 branches missed.">            	switch(commandArray[0]){</span>
+            	case &quot;i&quot;:
+            	case &quot;I&quot;:
+<span class="fc" id="L155">            		InitializeMatrix(command);</span>
+<span class="fc" id="L156">            		robotPosition[1]=0;</span>
+<span class="fc" id="L157">            		robotPosition[0]=0;</span>
+<span class="fc" id="L158">                    break;</span>
+            	case &quot;m&quot;:
+            	case &quot;M&quot;:
+<span class="fc" id="L161">            		move(robotPosition, commandArray, nMatrix, robotFace, penDirection, robotMap);</span>
+<span class="fc" id="L162">                    break;</span>
+            	case &quot;r&quot;:
+            	case &quot;R&quot;:
+<span class="nc" id="L165">            		robotFace = changeRobotFaceRight(robotFace);</span>
+<span class="nc" id="L166">            		break;</span>
+            	case &quot;l&quot;:
+            	case &quot;L&quot;:
+<span class="fc" id="L169">            		robotFace = changeRobotFaceLeft(robotFace);</span>
+<span class="fc" id="L170">            		break;</span>
+            	case &quot;u&quot;:
+            	case &quot;U&quot;:
+<span class="nc" id="L173">            		penDirection = &quot;up&quot;;</span>
+<span class="nc" id="L174">            		break;</span>
+            	case &quot;d&quot;:
+            	case &quot;D&quot;:
+<span class="nc" id="L177">            		penDirection = &quot;down&quot;;</span>
+            	case &quot;c&quot;:
+            	case &quot;C&quot;:
+            	{
+<span class="nc" id="L181">            		System.out.print(&quot;Position: &quot; + robotPosition[1]+&quot; &quot;+robotPosition[0]);</span>
+<span class="nc" id="L182">                	System.out.print(&quot; - Pen: &quot; + penDirection);</span>
+<span class="nc" id="L183">                	System.out.println(&quot; - Facing: &quot; + robotFace);</span>
+                	}
+<span class="nc" id="L185">                	break;</span>
+            	case &quot;q&quot;:
+            	case &quot;Q&quot;:
+<span class="fc" id="L188">            		System.out.println(&quot;End of Program&quot;);</span>
+<span class="fc" id="L189">                	flag = false;</span>
+<span class="fc" id="L190">                	break;</span>
+            	case &quot;p&quot;:
+            	case &quot;P&quot;:
+<span class="fc" id="L193">            		printArray(nMatrix);</span>
+<span class="fc" id="L194">            		break;</span>
+            	default:
+<span class="nc" id="L196">            		System.out.println(&quot;Enter a valid command:&quot;);</span>
+            	}
+            }
+<span class="nc" id="L199">                catch (NumberFormatException ex) {</span>
+<span class="nc" id="L200">                System.out.println(&quot;Invalid number format. Please try again with a valid command.&quot;);</span>
+<span class="fc" id="L201">            }</span>
+<span class="fc" id="L202">        }</span>
+<span class="fc" id="L203">    }</span>
+
+    public static void InitializeMatrix(String command) {
+<span class="fc" id="L206">		nMatrix = Integer.parseInt(command.substring(2).trim());</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">		if (nMatrix &gt; 0) {</span>
+<span class="fc" id="L208">		    initialiseArray(nMatrix);</span>
+		} else {
+<span class="fc" id="L210">		    System.out.print(&quot;The given command is not valid. Please enter a positive value!!!&quot;);</span>
+		}
+<span class="fc" id="L212">	}</span>
+
+    public static void main(String[] args) {
+<span class="fc" id="L215">    	inputCommand();</span>
+<span class="fc" id="L216">    }</span>
+
+	public static void printPositionPenFacing(int[] robotPosition2, String penDirection2, String robotFace2) {
+		// TODO Auto-generated method stub
+		
+<span class="nc" id="L221">	}</span>
+
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

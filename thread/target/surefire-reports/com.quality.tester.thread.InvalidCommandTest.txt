@@ -1,0 +1,14 @@
+-------------------------------------------------------------------------------
+Test set: com.quality.tester.thread.InvalidCommandTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.008 sec <<< FAILURE!
+testInvalidMoveCommand(com.quality.tester.thread.InvalidCommandTest)  Time elapsed: 0.007 sec  <<< ERROR!
+java.lang.Exception: Unexpected exception, expected<java.lang.IllegalArgumentException> but was<java.lang.NullPointerException>
+	at com.quality.tester.thread.Robot.move(Robot.java:72)
+	at com.quality.tester.thread.InvalidCommandTest.testInvalidMoveCommand(InvalidCommandTest.java:21)
+
+testTrackRobotWithNullDirection(com.quality.tester.thread.InvalidCommandTest)  Time elapsed: 0.001 sec  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because "penDirection" is null
+	at com.quality.tester.thread.Robot.trackRobot(Robot.java:43)
+	at com.quality.tester.thread.InvalidCommandTest.testTrackRobotWithNullDirection(InvalidCommandTest.java:37)
+

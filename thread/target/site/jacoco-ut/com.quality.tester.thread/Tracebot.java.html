@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Tracebot.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">quality-testing-example</a> &gt; <a href="index.source.html" class="el_package">com.quality.tester.thread</a> &gt; <span class="el_source">Tracebot.java</span></div><h1>Tracebot.java</h1><pre class="source lang-java linenums">package com.quality.tester.thread;
+	
+	import java.util.ArrayList;
+import java.util.Scanner;
+	
+<span class="nc" id="L6">	public class Tracebot {</span>
+		static int x;
+		static int y;
+		static int floorlimit;
+		static boolean penDown;
+		static int[][] floor;
+		static char direction;
+<span class="nc" id="L13">	    static ArrayList&lt;String&gt; commandHistory = new ArrayList&lt;String&gt;();</span>
+
+	
+		public static void main(String[] args) {
+<span class="nc" id="L17">			getCommand();</span>
+<span class="nc" id="L18">		}</span>
+		public void setPenDown(boolean penDown) {
+<span class="nc" id="L20">			Tracebot.penDown = penDown;</span>
+<span class="nc" id="L21">		}</span>
+	
+		public static void getCommand(){
+<span class="nc" id="L24">			Scanner in = new Scanner(System.in);</span>
+<span class="nc" id="L25">				System.out.print(&quot;Welcome to RoboticPen!!!\n&quot;</span>
+	                    + &quot;Use below commands!!!\n&quot;
+	                    + &quot;[U|u] Pen up\r\n&quot;
+	                    + &quot;[D|d] Pen down\r\n&quot;
+	                    + &quot;[R|r] Turn right\r\n&quot;
+	                    + &quot;[L|l] Turn left\r\n&quot;
+	                    + &quot;[M s|m s] Move forward s spaces (s is a non-negative integer)\r\n&quot;
+	                    + &quot;[P|p] Print the floor mapped\r\n&quot;
+	                    + &quot;[C|c] Print current position of the pen and whether it is up or down and its\r\n&quot;
+	                    + &quot;facing direction\r\n&quot;
+	                    + &quot;[Q|q] Stop the program\r\n&quot;
+	                    + &quot;[I n|i n] Initialize the system: The values of the array floor are zeros and the robot\r\n&quot;
+	                    + &quot;is back to [0, 0], pen up and facing north. n size of the array, an integer\r\n&quot;
+	                    + &quot;greater than zero\n&quot;
+	                    + &quot;[H|h] Replay all the commands entered by the user as a history\n&quot;);
+<span class="nc" id="L40">	            System.out.print(&quot;Enter command: &quot;);</span>
+<span class="nc" id="L41">				String command = in.nextLine();</span>
+<span class="nc" id="L42">				  char justCode = command.charAt(0);</span>
+<span class="nc bnc" id="L43" title="All 4 branches missed.">				while (!((justCode =='q')|| (justCode =='Q'))) {</span>
+					try {
+<span class="nc" id="L45">					commandHistory.add(command);</span>
+<span class="nc bnc" id="L46" title="All 10 branches missed.">					switch (justCode) {</span>
+					case 'I':
+					case 'i':
+<span class="nc" id="L49">						int floorSize = Integer.parseInt(command.substring(2).trim());</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">						if(floorSize&gt;0) {</span>
+<span class="nc" id="L51">						initializeFloor(floorSize);</span>
+						} 
+						else
+<span class="nc" id="L54">							System.out.print(&quot; give the command and a positive value again!!!&quot;);</span>
+<span class="nc" id="L55">						break;</span>
+					case 'C':
+					case 'c':
+<span class="nc" id="L58">						printPosition();</span>
+<span class="nc" id="L59">						break;</span>
+					case 'D':
+					case 'd':
+<span class="nc" id="L62">						penDown = true;</span>
+<span class="nc" id="L63">						break;</span>
+					case 'U':
+					case 'u':
+<span class="nc" id="L66">						penDown = false;</span>
+<span class="nc" id="L67">						break;</span>
+					case 'M':
+					case 'm':
+<span class="nc" id="L70">						int steps = Integer.parseInt(command.substring(2).trim());</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">						if(steps&gt;0)</span>
+<span class="nc" id="L72">							move(steps);</span>
+						else
+<span class="nc" id="L74">							System.out.print(&quot; give the command and a positive value again!!!&quot;);</span>
+<span class="nc" id="L75">						break;</span>
+					case 'R':
+					case 'r':
+<span class="nc" id="L78">						turnRight(Tracebot.direction);</span>
+<span class="nc" id="L79">						break;</span>
+					case 'L':
+					case 'l':
+<span class="nc" id="L82">						turnLeft(Tracebot.direction);</span>
+<span class="nc" id="L83">						break;</span>
+					case 'P':
+					case 'p':
+<span class="nc" id="L86">						System.out.println(printFloor());</span>
+<span class="nc" id="L87">						break;</span>
+					case 'H':
+	                case 'h':
+<span class="nc" id="L90">	                    replayHistory();</span>
+<span class="nc" id="L91">	                    break;</span>
+					default:
+<span class="nc" id="L93">						System.out.println(&quot;Invalid command. Please try again.&quot;);</span>
+						break;
+					}
+<span class="nc" id="L96">				}catch (Exception e){</span>
+<span class="nc" id="L97">						System.out.println(&quot;Wrong input, please give valid command!&quot;+e.getMessage());</span>
+						
+<span class="nc" id="L99">					}</span>
+<span class="nc" id="L100">					System.out.print(&quot; \nEnter command: &quot;);</span>
+<span class="nc" id="L101">					command = in.nextLine();</span>
+<span class="nc" id="L102">					justCode = command.charAt(0);</span>
+	
+				 
+			}
+
+<span class="nc" id="L107">		}</span>
+	
+		public static void initializeFloor(int size) {
+<span class="nc" id="L110">			floor = new int[size][size];</span>
+<span class="nc" id="L111">			floorlimit = size;</span>
+<span class="nc" id="L112">			x = 0;</span>
+<span class="nc" id="L113">			y = 0;</span>
+<span class="nc" id="L114">			direction = 'N';</span>
+<span class="nc" id="L115">			penDown = false;</span>
+<span class="nc" id="L116">		}</span>
+		public static void turnRight(char direction) {
+<span class="nc bnc" id="L118" title="All 5 branches missed.">			switch(direction) {</span>
+			case 'N':
+<span class="nc" id="L120">				Tracebot.direction = 'E';</span>
+<span class="nc" id="L121">				break;</span>
+			case 'E':
+<span class="nc" id="L123">				Tracebot.direction = 'S';</span>
+<span class="nc" id="L124">				break;</span>
+			case 'S':
+<span class="nc" id="L126">				Tracebot.direction = 'W';</span>
+<span class="nc" id="L127">				break;</span>
+			case 'W':
+<span class="nc" id="L129">				Tracebot.direction = 'N';</span>
+				break;
+			}
+<span class="nc" id="L132">		}</span>
+	
+		public static void turnLeft(char direction) {
+<span class="nc bnc" id="L135" title="All 4 branches missed.">			switch(direction) {</span>
+			case 'W':
+<span class="nc" id="L137">				Tracebot.direction = 'S';</span>
+<span class="nc" id="L138">				break;</span>
+			case 'S':
+<span class="nc" id="L140">				Tracebot.direction = 'E';</span>
+<span class="nc" id="L141">				break;</span>
+			case 'E':
+<span class="nc" id="L143">				Tracebot.direction = 'N';</span>
+<span class="nc" id="L144">				break;</span>
+			default:
+			case 'N':
+<span class="nc" id="L147">				Tracebot.direction = 'W';</span>
+				break;
+			}
+<span class="nc" id="L150">		}</span>
+		
+		public static void floorY(int space){
+<span class="nc" id="L153">	        int xx = Tracebot.x;</span>
+<span class="nc" id="L154">	        int yy = Tracebot.y;</span>
+<span class="nc" id="L155">	        char direction = Tracebot.direction;</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">	        if (direction =='N'){</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">	            for (int i = 0; i &lt;= space; ++i){</span>
+<span class="nc" id="L158">	            	floor[xx][yy+i] = 1;</span>
+	            }
+	        }
+	        else {
+<span class="nc bnc" id="L162" title="All 2 branches missed.">	            for(int i = 0; i &lt;= space; ++i){</span>
+<span class="nc" id="L163">	            	floor[xx][yy-i] = 1;</span>
+	            }
+	        }
+<span class="nc" id="L166">	    }</span>
+		
+		public static void floorX(int space){
+<span class="nc" id="L169">	        int xx = Tracebot.x;</span>
+<span class="nc" id="L170">	        int yy = Tracebot.y;</span>
+<span class="nc" id="L171">	        char direction = Tracebot.direction;</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">	        if (direction =='E'){</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">	            for (int i = 0; i &lt;= space; ++i){       </span>
+<span class="nc" id="L174">	            	floor[xx+i][yy] = 1;</span>
+	            }
+	        }
+	        else {
+<span class="nc bnc" id="L178" title="All 2 branches missed.">	            for(int i = 0; i &lt;= space; ++i){</span>
+<span class="nc" id="L179">	            	floor[xx-i][yy] = 1;</span>
+	            }
+	        }
+<span class="nc" id="L182">	    }</span>
+		
+		//Move robot based on direction and input steps
+	    public static void move(int space){
+<span class="nc" id="L186">	    	int xx = Tracebot.x;</span>
+<span class="nc" id="L187">	        int yy = Tracebot.y;</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">	        if (checkFloorEdge(space))</span>
+	        {
+<span class="nc bnc" id="L190" title="All 5 branches missed.">	            switch (Tracebot.direction){</span>
+	                case 'N':
+<span class="nc" id="L192">	                    yy += space;</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">	                    if (Tracebot.penDown)</span>
+<span class="nc" id="L194">	                        floorY(space);</span>
+<span class="nc" id="L195">	                    Tracebot.y = yy;</span>
+<span class="nc" id="L196">	                    break;</span>
+	                case 'S':
+<span class="nc" id="L198">	                    yy -= space;</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">	                    if (Tracebot.penDown)</span>
+<span class="nc" id="L200">	                        floorY(space);</span>
+<span class="nc" id="L201">	                    Tracebot.y = yy;</span>
+<span class="nc" id="L202">	                    break;</span>
+	                case 'E':
+<span class="nc" id="L204">	                    xx += space;</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">	                    if (Tracebot.penDown)</span>
+<span class="nc" id="L206">	                        floorX(space);</span>
+<span class="nc" id="L207">	                    Tracebot.x = xx;</span>
+<span class="nc" id="L208">	                    break;</span>
+	                case 'W':
+<span class="nc" id="L210">	                    xx -= space;</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">	                    if (Tracebot.penDown)</span>
+<span class="nc" id="L212">	                        floorX(space);</span>
+<span class="nc" id="L213">	                    Tracebot.x = xx;</span>
+<span class="nc" id="L214">	                    break;</span>
+	                default:
+<span class="nc" id="L216">	                    System.out.println(&quot;Invalid Direction!&quot;);</span>
+<span class="nc" id="L217">	                    break;</span>
+	            }
+	            
+	        }
+	        else {
+<span class="nc" id="L222">                System.out.println(&quot;Out of Floor boundary!&quot;);</span>
+	        	
+	        }
+<span class="nc" id="L225">	    }</span>
+
+	    //Check if input steps are within the matrix
+	    public static boolean checkFloorEdge(int space){
+<span class="nc" id="L229">	        char dir = Tracebot.direction;</span>
+<span class="nc" id="L230">	        int xx = Tracebot.x;</span>
+<span class="nc" id="L231">	        int yy = Tracebot.y;</span>
+<span class="nc" id="L232">	        int size = Tracebot.floorlimit;</span>
+<span class="nc bnc" id="L233" title="All 4 branches missed.">	        switch (dir){</span>
+	            case 'S':
+<span class="nc bnc" id="L235" title="All 2 branches missed.">	                return yy - space &gt;= 0;</span>
+	            case 'E':
+<span class="nc bnc" id="L237" title="All 2 branches missed.">	                return xx + space &lt; size;</span>
+	            case 'W':
+<span class="nc bnc" id="L239" title="All 2 branches missed.">	                return xx - space &gt;= 0;</span>
+	            default:
+	            case 'N':
+<span class="nc bnc" id="L242" title="All 2 branches missed.">	                return yy + space &lt; size;</span>
+	        }
+	    }
+	
+		public static void printPosition() {
+<span class="nc bnc" id="L247" title="All 2 branches missed.">			System.out.println(&quot;Position: &quot; + x + &quot;, &quot; + y + &quot; - Pen: &quot; + (penDown ? &quot;down&quot; : &quot;up&quot;) + &quot; - Facing: &quot; + direction);</span>
+<span class="nc" id="L248">		}</span>
+	
+		public static String printFloor() {
+	
+<span class="nc" id="L252">			StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">			for (int i = floor.length - 1; i &gt;= 0; i--) {</span>
+	
+<span class="nc bnc" id="L255" title="All 2 branches missed.">				for (int j = 0; j &lt; floor[0].length; j++) {</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">					sb.append(floor[j][i] == 1 ? &quot;* &quot; : &quot;  &quot;);</span>
+				}
+<span class="nc" id="L258">				sb.append(&quot;\n&quot;);</span>
+			}
+<span class="nc" id="L260">			return sb.toString();</span>
+		}
+		
+		public static void replayHistory() {
+<span class="nc" id="L264">	        System.out.println(&quot;Command History:&quot;);</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">	        for (String command : commandHistory) {</span>
+<span class="nc" id="L266">	            System.out.println(command);</span>
+<span class="nc" id="L267">	        }</span>
+<span class="nc" id="L268">	    }</span>
+	
+	}
+	
+	
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,41 @@
+-------------------------------------------------------------------------------
+Test set: com.quality.tester.thread.InvalidMoveTest
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 1, Errors: 5, Skipped: 0, Time elapsed: 0.003 sec <<< FAILURE!
+testMoveWithNegativeSteps(com.quality.tester.thread.InvalidMoveTest)  Time elapsed: 0 sec  <<< FAILURE!
+org.junit.internal.ArrayComparisonFailure: arrays first differed at element [0]; expected:<2> but was:<0>
+	at org.junit.internal.ComparisonCriteria.arrayEquals(ComparisonCriteria.java:50)
+	at org.junit.Assert.internalArrayEquals(Assert.java:473)
+	at org.junit.Assert.assertArrayEquals(Assert.java:369)
+	at org.junit.Assert.assertArrayEquals(Assert.java:380)
+	at com.quality.tester.thread.InvalidMoveTest.testMoveWithNegativeSteps(InvalidMoveTest.java:65)
+
+testMoveZeroSteps(com.quality.tester.thread.InvalidMoveTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.NullPointerException: Cannot load from int array because "robotPosition" is null
+	at com.quality.tester.thread.Robot.move(Robot.java:72)
+	at com.quality.tester.thread.InvalidMoveTest.testMoveZeroSteps(InvalidMoveTest.java:22)
+
+testMoveWithEmptyCommand(com.quality.tester.thread.InvalidMoveTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+	at com.quality.tester.thread.Robot.move(Robot.java:74)
+	at com.quality.tester.thread.InvalidMoveTest.testMoveWithEmptyCommand(InvalidMoveTest.java:86)
+
+testMoveOutsideGrid(com.quality.tester.thread.InvalidMoveTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.NullPointerException: Cannot load from int array because "robotPosition" is null
+	at com.quality.tester.thread.Robot.move(Robot.java:72)
+	at com.quality.tester.thread.InvalidMoveTest.testMoveOutsideGrid(InvalidMoveTest.java:30)
+
+testMoveWithNullPenPosition(com.quality.tester.thread.InvalidMoveTest)  Time elapsed: 0.001 sec  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because "penDirection" is null
+	at com.quality.tester.thread.Robot.trackRobot(Robot.java:43)
+	at com.quality.tester.thread.Robot.move(Robot.java:107)
+	at com.quality.tester.thread.InvalidMoveTest.testMoveWithNullPenPosition(InvalidMoveTest.java:52)
+
+testMoveWithNonNumericSteps(com.quality.tester.thread.InvalidMoveTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.NumberFormatException: For input string: "ABC"
+	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
+	at java.base/java.lang.Integer.parseInt(Integer.java:665)
+	at java.base/java.lang.Integer.parseInt(Integer.java:781)
+	at com.quality.tester.thread.Robot.move(Robot.java:74)
+	at com.quality.tester.thread.InvalidMoveTest.testMoveWithNonNumericSteps(InvalidMoveTest.java:75)
+

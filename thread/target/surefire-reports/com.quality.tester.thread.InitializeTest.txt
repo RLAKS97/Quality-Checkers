@@ -1,0 +1,31 @@
+-------------------------------------------------------------------------------
+Test set: com.quality.tester.thread.InitializeTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.018 sec <<< FAILURE!
+testInitialPosition(com.quality.tester.thread.InitializeTest)  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.AssertionError: actual array was null
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.internal.ComparisonCriteria.assertArraysAreSameLength(ComparisonCriteria.java:66)
+	at org.junit.internal.ComparisonCriteria.arrayEquals(ComparisonCriteria.java:32)
+	at org.junit.Assert.internalArrayEquals(Assert.java:473)
+	at org.junit.Assert.assertArrayEquals(Assert.java:369)
+	at org.junit.Assert.assertArrayEquals(Assert.java:380)
+	at com.quality.tester.thread.InitializeTest.testInitialPosition(InitializeTest.java:39)
+
+testInitialRobotFace(com.quality.tester.thread.InitializeTest)  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<north> but was:<null>
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.failNotEquals(Assert.java:743)
+	at org.junit.Assert.assertEquals(Assert.java:118)
+	at org.junit.Assert.assertEquals(Assert.java:144)
+	at com.quality.tester.thread.InitializeTest.testInitialRobotFace(InitializeTest.java:51)
+
+testInputCommandInitializeFloor(com.quality.tester.thread.InitializeTest)  Time elapsed: 0.016 sec  <<< FAILURE!
+org.junit.internal.ArrayComparisonFailure: arrays first differed at element [0][0]; expected:<0> but was:<null>
+	at org.junit.internal.ComparisonCriteria.arrayEquals(ComparisonCriteria.java:50)
+	at org.junit.internal.ComparisonCriteria.arrayEquals(ComparisonCriteria.java:41)
+	at org.junit.Assert.internalArrayEquals(Assert.java:473)
+	at org.junit.Assert.assertArrayEquals(Assert.java:265)
+	at org.junit.Assert.assertArrayEquals(Assert.java:280)
+	at com.quality.tester.thread.InitializeTest.testInputCommandInitializeFloor(InitializeTest.java:33)
+
