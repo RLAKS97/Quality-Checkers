@@ -1,7 +1,7 @@
-COEN 6761 - Software Testing and Validation Project - Summer 2023
+#### COEN 6761 - Software Testing and Validation Project - Summer 2023
 # Team Quality-Checkers
 
-####Initial steps to setup project in Eclipse
+#### Initial steps to setup project in Eclipse
 
 #### To Run Application
 To get started with running the project
