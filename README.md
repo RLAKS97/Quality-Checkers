@@ -60,14 +60,19 @@ This guide explains how to import a Maven project into Eclipse, download the req
 
 - If the project doesn't build or run as expected, double-check your project's configuration, classpath, and code.
 
-#### To Test Application
+#### Application Testing
 
-1. Edit the JUnit run-configuration in IDE to point to all or any of the test cases.
-2. Run the @Test individually by clicking run on the left side of each method.
-3. Run the PIT Mutation Test by using the shortcut "run as" --> PIt Mutation test to generate Mutation test report.
+1. Modify the JUnit run configuration within your IDE to target either specific or all test cases.
+2. Execute individual test cases annotated with @Test by selecting and clicking the "Run" option located on the left side of each method.
+3. Initiate the PIT Mutation Test by utilizing the "Run As" feature, followed by the "PIT Mutation Test" option, to generate a comprehensive Mutation Test report.
 
-#### To run Coverage using JaCoCo
-1. In order to generate test cases and the jacoco report run the shell command given below in the project's directory where Pom.xml is present.
-    ```shell
-    mvn clean install
-   ```  
+#### Code Coverage Steps
+
+1. Enable JaCoCo:
+2. In the Coverage tab, check the box that says Enable JaCoCo.
+   Run the Test:
+3. Click the Run button to execute your JUnit tests.
+   View Code Coverage Report:
+
+After the test run, you'll see the coverage results in the Coverage view.
+This view displays coverage percentages for classes, methods, and lines.
